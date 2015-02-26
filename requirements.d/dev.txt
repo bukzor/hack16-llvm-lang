@@ -3,4 +3,3 @@
 -r test.txt
 -r _lint.txt
 tox
-pypandoc
