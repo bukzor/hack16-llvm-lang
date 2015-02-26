@@ -16,12 +16,12 @@ fi
 if $PYPY; then
     # Having issues with memory, let's try reducing CPUs by half
     py.test -n $((NCPU / 2)) \
-        "$@" $TOP/tests $SITEPACKAGES/${PROJECT}.py
+        "$@" $TOP/tests $SITEPACKAGES/${PROJECT}/
 else
     coverage erase
     py.test -n $NCPU \
         --cov --cov-config=$TOP/.coveragerc --cov-report='' \
-        "$@" $TOP/tests $SITEPACKAGES/${PROJECT}.py
+        "$@" $TOP/tests $SITEPACKAGES/${PROJECT}/
     coverage combine
     coverage report --rcfile=$TOP/.coveragerc --fail-under 94  # FIXME: should be 100
 fi

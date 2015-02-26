@@ -5,11 +5,6 @@ from re import compile as Regex, MULTILINE
 TOP = Path(__file__) / '../../..'
 
 
-def requirements(reqs):
-    """Write a requirements.txt file to the current working directory."""
-    Path('requirements.txt').write(reqs)
-
-
 def run(*cmd, **env):
     if env:
         from os import environ
@@ -26,10 +21,10 @@ def run(*cmd, **env):
     return out, err
 
 
-def venv_update(*args, **env):
+def mylang_compile(*args, **env):
     # we get coverage for free via the (patched) pytest-cov plugin
     return run(
-        'venv-update',
+        'mylang-compile',
         *args,
         HOME=str(Path('.').realpath()),
         **env
