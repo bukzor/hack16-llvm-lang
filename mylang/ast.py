@@ -1,13 +1,13 @@
 from ._tokenlike import Tokenlike
 
 
-class Token(Tokenlike):
+class AST(Tokenlike):
     pass
 
 
-class ID(Token):
+class Module(AST):
     pass
 
 
-class WS(Token):
+class Hello(AST):
     pass
