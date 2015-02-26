@@ -1,0 +1,13 @@
+NOW: Should probably do before v1.0
+-----------------------------------
+
+* test suite
+* lexer
+* parser
+* compiler
+
+
+LATER: Things that I want to do, but would put me past my deadline:
+------------------------------------------------------------
+
+* self-hosting

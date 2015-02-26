@@ -1,0 +1,44 @@
+language: python
+env:
+    # putting this ahead of the `python` directive
+    #   means we start all lints before any tests
+    - TOXENV=lint
+    - TOXENV=test
+python:
+    # in order of most-valuable tests first
+    - "3.4"
+    - pypy3
+    - "2.6"
+    - pypy
+    - "2.7"
+
+matrix:
+    # notify a failed build as soon as anything fails
+    fast_finish: true
+    # really only need to run lint twice
+    exclude:
+        - python: pypy3
+          env: TOXENV=lint
+        - python: "2.6"
+          env: TOXENV=lint
+        - python: pypy
+          env: TOXENV=lint
+
+install: pip install -r requirements.d/travis.txt
+script: tox
+after_success:
+    - find -name '.coverage*' | xargs mv -t .
+    - coverage combine
+    - coveralls
+after_failure:
+    # attempt to show any pip.log on failure
+    - find -name pip.log | xargs -r tail -n99999
+
+
+# sudo:false gives us the new, faster cluster and enables caches for public repos
+# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+cache:
+    directories:
+        - $HOME/.pip
+        - $HOME/.pre-commit
