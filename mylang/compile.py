@@ -84,20 +84,19 @@ def compiler(ast):
                 % (_type, hello)
             )
         elif cls is AST.Print:
-            print_codegen(ast, module, builder, zero)
+            print_codegen(ast, module)
 
     return module
 
 
-def print_codegen(ast, module, builder, zero):
+def print_codegen(ast, module):
     string_node = next(ast)
     arg = string_node.datas[0]
-    arg_value = module.add_constant(bytearray(arg))
+    _type, arg_value = module.add_constant(arg)
     module.header.add(
         'declare i32 @"printf"(i8* %".1")'
     )
     module.body.append(
-        'call i32 (i8*)* @"printf"(i8* getelementptr (%s, i32 0, i32 0))'
-        % arg_value
+        'call i32 (i8*)* @"printf"(i8* getelementptr (%s* %s, i32 0, i32 0))'
+        % (_type, arg_value)
     )
-
