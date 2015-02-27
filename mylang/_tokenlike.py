@@ -10,6 +10,6 @@ class Tokenlike(object):
             return NotImplemented
 
         return (
-            type(self) is type(other),
-            self.datas == other.datas,
+            type(self) is type(other) and
+            self.datas == other.datas
         )

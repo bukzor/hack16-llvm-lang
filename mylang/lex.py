@@ -9,6 +9,7 @@ def trynext(iterator):
 
 
 def lex(source):
+    # TODO: hello, world! should be a valid program
     result = []
 
     source = iter(source)

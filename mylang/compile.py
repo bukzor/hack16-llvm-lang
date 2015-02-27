@@ -13,6 +13,8 @@ def compiler(ast):
     fntype = ll.FunctionType(i32, [])
     zero = builder.constant(i32, 0)
 
+    hello_globals = False
+
     for node in ast:
         cls = type(node)
         if cls is AST.Module:
@@ -23,12 +25,16 @@ def compiler(ast):
         elif cls is AST.Hello:
             hellostr = 'hello, world!'
 
-            stringtype = ll.ArrayType(i8, len(hellostr))
-            hello = ll.GlobalVariable(module, stringtype, '.str4')
-            hello.initializer = builder.constant(stringtype, bytearray(hellostr))
+            if not hello_globals:
+                # TODO-TEST: two hellos
+                stringtype = ll.ArrayType(i8, len(hellostr))
+                hello = ll.GlobalVariable(module, stringtype, '.str4')
+                hello.initializer = builder.constant(stringtype, bytearray(hellostr))
 
-            fntype = ll.FunctionType(i32, [i8.as_pointer()])
-            puts = ll.Function(module, fntype, 'puts')
+                fntype = ll.FunctionType(i32, [i8.as_pointer()])
+                puts = ll.Function(module, fntype, 'puts')
+
+                hello_globals = True
 
             builder.call(puts, [hello.gep((zero, zero))])
 

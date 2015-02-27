@@ -1,3 +1,4 @@
+from __future__ import print_function
 import llvmlite.ir as ll
 
 i32 = ll.IntType(32)
