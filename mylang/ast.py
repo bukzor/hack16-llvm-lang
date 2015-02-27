@@ -7,7 +7,8 @@ class AST(Tokenlike):
         while stack:
             node = stack.pop()
             yield node
-            stack.extend(reversed(node.datas))
+            if isinstance(node, AST):
+                stack.extend(reversed(node.datas))
 
 
 class Module(AST):
@@ -15,4 +16,12 @@ class Module(AST):
 
 
 class Hello(AST):
+    pass
+
+
+class Print(AST):
+    pass
+
+
+class String(AST):
     pass

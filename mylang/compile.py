@@ -4,6 +4,7 @@ from mylang import ast as AST
 
 i32 = ll.IntType(32)
 i8 = ll.IntType(8)
+i = 0
 
 
 def compiler(ast):
@@ -15,6 +16,7 @@ def compiler(ast):
 
     hello_globals = False
 
+    ast = iter(ast)
     for node in ast:
         cls = type(node)
         if cls is AST.Module:
@@ -26,7 +28,6 @@ def compiler(ast):
             hellostr = 'hello, world!'
 
             if not hello_globals:
-                # TODO-TEST: two hellos
                 stringtype = ll.ArrayType(i8, len(hellostr))
                 hello = ll.GlobalVariable(module, stringtype, '.str4')
                 hello.initializer = builder.constant(stringtype, bytearray(hellostr))
@@ -37,5 +38,19 @@ def compiler(ast):
                 hello_globals = True
 
             builder.call(puts, [hello.gep((zero, zero))])
+        elif cls is AST.Print:
+            print_codegen(ast, module, builder, zero)
 
     return module
+
+
+def print_codegen(ast, module, builder, zero):
+    global i
+    string_node = next(ast)
+    arg = string_node.datas[0]
+    i = i + 1
+    stringtype = ll.ArrayType(i8, len(arg))
+    arg_value = ll.GlobalVariable(module, stringtype, 'print_arg%s' % i)
+    arg_value.initializer = builder.constant(stringtype, bytearray(arg))
+    printf = ll.Function(module, ll.FunctionType(i32, [i8.as_pointer()]), 'printf')
+    builder.call(printf, [arg_value.gep((zero, zero))])

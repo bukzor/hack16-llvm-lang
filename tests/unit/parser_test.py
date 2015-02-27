@@ -13,3 +13,12 @@ def test_parse_hello():
 
 def test_parse_hello_with_whitespace():
     assert parse([tokens.WS('\n\n   '), tokens.ID('hello'), tokens.WS('\n\t')]) == ast.Module(ast.Hello())
+
+
+def test_print():
+    assert parse([
+        tokens.ID('print'),
+        tokens.WS(' '),
+        tokens.ID('butt'),
+        tokens.WS('\n'),
+    ]) == ast.Module(ast.Print(), ast.String(' butt'))
