@@ -35,3 +35,20 @@ define i32 @"main"()
     ret i32 0
 }
 '''
+
+def test_compile_print():
+    assert str(compiler(ast.Module(ast.Print(), ast.String(' butt')))) == '''\
+; ModuleID = ""
+target triple = ""
+target datalayout = ""
+
+@".str1" =   global [5 x i8] c"\\20butt"
+declare i32 @"printf"(i8* %".1")
+
+
+define i32 @"main"()
+{
+    call i32 (i8*)* @"printf"(i8* getelementptr ([5 x i8]* @".str1", i32 0, i32 0))
+    ret i32 0
+}
+'''
