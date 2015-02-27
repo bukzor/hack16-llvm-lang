@@ -31,7 +31,7 @@ declare i32 @"puts"(i8* %".1")
 
 define i32 @"main"()
 {
-    call i32 (i8*)* @"puts"(i8* getelementptr (@".str1", i32 0, i32 0))
+    call i32 (i8*)* @"puts"(i8* getelementptr ([13 x i8]* @".str1", i32 0, i32 0))
     ret i32 0
 }
 '''
