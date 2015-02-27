@@ -1,11 +1,9 @@
-import llvmlite.ir as ll
 from mylang import ast
-from mylang.compile import compile
-from mylang.interpret import interpret
+from mylang.compile import compiler
 
 
 def test_compile_null():
-    assert str(compile(ast.Module())) == '''\
+    assert str(compiler(ast.Module())) == '''\
 ; ModuleID = ""
 target triple = ""
 target datalayout = ""
@@ -22,10 +20,8 @@ define i32 @"main"()
 '''
 
 
-
-
 def test_compile_hello():
-    assert str(compile(ast.Module(ast.Hello()))) == '''\
+    assert str(compiler(ast.Module(ast.Hello()))) == '''\
 ; ModuleID = ""
 target triple = ""
 target datalayout = ""

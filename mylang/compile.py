@@ -6,7 +6,7 @@ i32 = ll.IntType(32)
 i8 = ll.IntType(8)
 
 
-def compile(ast):
+def compiler(ast):
     builder = ll.IRBuilder()
     module = ll.Module()
     module.triple = ''

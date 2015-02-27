@@ -2,6 +2,7 @@ import pytest
 
 env_whitelist = (
     'TERM',
+    'PATH',
 )
 
 
