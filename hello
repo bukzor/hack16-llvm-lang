@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+from sys import argv, stdout
+
+from mylang.hello import hello
+
+for fname in argv[1:]:
+    stdout.write(hello(open(fname).read()))
