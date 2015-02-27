@@ -23,8 +23,12 @@ def print_arg(lexemes):
             if '\n' in value:
                 left = value.split('\n')[0]
                 arg_value += left
-                return arg_value
+                break
             arg_value += value
         elif type(lexeme) is tokens.ID:
             arg_value += lexeme.datas[0]
-    return arg_value
+    return unescape_chars(arg_value)
+
+
+def unescape_chars(string):
+    return string.replace('\\n', '\n')

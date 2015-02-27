@@ -6,7 +6,6 @@ from mylang import ast as AST
 
 i32 = ll.IntType(32)
 i8 = ll.IntType(8)
-i = 0
 
 
 def compiler(ast):
@@ -14,7 +13,9 @@ def compiler(ast):
     module = ll.Module()
     module.triple = ''
     fntype = ll.FunctionType(i32, [])
+    global_symbols = dict()
     zero = builder.constant(i32, 0)
+    global_symbols['zero'] = zero
 
     hello_globals = False
 
@@ -41,18 +42,23 @@ def compiler(ast):
 
             builder.call(puts, [hello.gep((zero, zero))])
         elif cls is AST.Print:
-            print_codegen(ast, module, builder, zero)
+            print_codegen(ast, module, builder, global_symbols)
 
     return module
 
 
-def print_codegen(ast, module, builder, zero):
-    global i
+def print_codegen(ast, module, builder, global_symbols):
     string_node = next(ast)
     arg = string_node.datas[0]
-    i = i + 1
+    print_codegen.i = print_codegen.i + 1
     stringtype = ll.ArrayType(i8, len(arg))
-    arg_value = ll.GlobalVariable(module, stringtype, 'print_arg%s' % i)
+    arg_value = ll.GlobalVariable(module, stringtype, 'print_arg%s' % print_codegen.i)
     arg_value.initializer = builder.constant(stringtype, bytearray(arg))
-    printf = ll.Function(module, ll.FunctionType(i32, [i8.as_pointer()]), 'printf')
+    if 'printf' in global_symbols:
+        printf = global_symbols['printf']
+    else:
+        printf = global_symbols['printf'] = ll.Function(module, ll.FunctionType(i32, [i8.as_pointer()]), 'printf')
+    zero = global_symbols['zero']
     builder.call(printf, [arg_value.gep((zero, zero))])
+
+print_codegen.i = 0

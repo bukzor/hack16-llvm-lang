@@ -22,3 +22,12 @@ def test_print():
         tokens.ID('butt'),
         tokens.WS('\n'),
     ]) == ast.Module(ast.Print(), ast.String(' butt'))
+
+
+def test_print_escape_newlines():
+    assert parse([
+        tokens.ID('print'),
+        tokens.WS(' '),
+        tokens.ID('butt\\n'),
+        tokens.WS('\n'),
+    ]) == ast.Module(ast.Print(), ast.String(' butt\n'))
