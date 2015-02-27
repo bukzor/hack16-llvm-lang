@@ -1,1 +1,2 @@
 # minimal set of packages for end-users
+llvmlite # needs llvm 3.5
