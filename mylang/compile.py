@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import llvmlite.ir as ll
 
 from mylang import ast as AST
@@ -29,7 +31,7 @@ def compiler(ast):
                 # TODO-TEST: two hellos
                 stringtype = ll.ArrayType(i8, len(hellostr))
                 hello = ll.GlobalVariable(module, stringtype, '.str4')
-                hello.initializer = builder.constant(stringtype, bytearray(hellostr))
+                hello.initializer = builder.constant(stringtype, bytearray(hellostr, 'utf-8'))
 
                 fntype = ll.FunctionType(i32, [i8.as_pointer()])
                 puts = ll.Function(module, fntype, 'puts')
