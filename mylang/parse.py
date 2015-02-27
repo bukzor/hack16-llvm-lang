@@ -1,6 +1,7 @@
 from mylang import ast
 from mylang import tokens
 
+
 def parse(lexemes):
     result = ast.Module()
     for lexeme in lexemes:

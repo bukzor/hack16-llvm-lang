@@ -1,10 +1,13 @@
 from mylang import ast
 
+
 def test_module():
-    repr(ast.Module()) == 'Module()'
+    assert repr(ast.Module()) == 'Module()'
+
 
 def test_module_with_hello():
-    repr(ast.Module()) == 'Module(Hello(),)'
+    assert repr(ast.Module(ast.Hello())) == 'Module(Hello(),)'
+
 
 def test_hello():
-    repr(ast.Hello()) == 'Hello()'
+    assert repr(ast.Hello()) == 'Hello()'
