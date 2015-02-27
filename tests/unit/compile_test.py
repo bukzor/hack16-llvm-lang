@@ -9,14 +9,13 @@ target triple = ""
 target datalayout = ""
 
 
-define i32 @"main"() 
+
+
+define i32 @"main"()
 {
-.1:
-  ret i32 0
+    
+    ret i32 0
 }
-
-
-
 '''
 
 
@@ -26,17 +25,13 @@ def test_compile_hello():
 target triple = ""
 target datalayout = ""
 
+declare i32 @"puts"(i8* %".1")
+@".str1" =   global [13 x i8] c"hello\\2c\\20world\\21"
 
-define i32 @"main"() 
+
+define i32 @"main"()
 {
-.1:
-  %".3" = call i32 (i8*)* @"puts"(i8* getelementptr ([13 x i8]* @".str4", i32 0, i32 0))
-  ret i32 0
+    call i32 (i8*)* @"puts"(i8* getelementptr (@".str1", i32 0, i32 0))
+    ret i32 0
 }
-
-@".str4" =   global [13 x i8] c"hello\\2c\\20world\\21"
-declare i32 @"puts"(i8* %".1") 
-
-
-
 '''
