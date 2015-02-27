@@ -18,16 +18,17 @@ class LLModule(object):
 
     def add_constant(self, constant):
         if constant in self._constants:
-            varname = self._constants[constant]
+            (_type, varname) = self._constants[constant]
         else:
+            _type = "[%i x i8]" % len(constant)
             varname = self.nextvar
-            self._constants[constant] = varname
+            self._constants[constant] = (_type, varname)
             self.header.add(
-                r'%s =   global [%i x i8] c"%s"' % (
-                    varname, len(constant), self.escape(constant),
+                r'%s =   global %s c"%s"' % (
+                    varname, _type, self.escape(constant),
                 )
             )
-        return varname
+        return (_type, varname)
 
     @staticmethod
     def escape(text):
@@ -74,13 +75,13 @@ def compiler(ast):
         if cls is AST.Module:
             pass
         elif cls is AST.Hello:
-            hello = module.add_constant(b'hello, world!')
+            _type, hello = module.add_constant(b'hello, world!')
             module.header.add(
                 'declare i32 @"puts"(i8* %".1")'
             )
             module.body.append(
-                'call i32 (i8*)* @"puts"(i8* getelementptr (%s, i32 0, i32 0))'
-                % hello
+                'call i32 (i8*)* @"puts"(i8* getelementptr (%s* %s, i32 0, i32 0))'
+                % (_type, hello)
             )
         elif cls is AST.Print:
             print_codegen(ast, module, builder, zero)
