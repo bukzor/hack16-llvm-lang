@@ -1,5 +1,8 @@
 .PHONY: all
-all: lint test
+all: CI
+
+.PHONY: CI
+CI: lint test
 
 .PHONY: lint
 lint:
@@ -17,3 +20,7 @@ tox:
 clean:
 	rm -rf .tox
 	find -name '*.pyc' -print0 | xargs -0 -r -P4 rm
+
+.PHONY: build
+build:
+	emcc hello.c -O3 -s EXPORTED_FUNCTIONS="['_main', '_eval']" -s NO_EXIT_RUNTIME=True -o chrome-extension/scripts/hello.js

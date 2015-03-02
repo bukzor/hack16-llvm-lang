@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "hilang",
+    "description": "Oh, hi there! I'm a language."
+  },
+  "appDescription": {
+    "message": "Interpreter for application/x-hilang scripts",
+    "description": "Oh, hi there! I'm a language."
+  }
+}
