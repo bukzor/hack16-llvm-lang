@@ -1,5 +1,6 @@
--   repo: git://github.com/pre-commit/pre-commit-hooks
-    sha: v0.3.0
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v0.3.0
     hooks:
     -   id: trailing-whitespace
         files: \.(md|py|txt|sh)$
@@ -15,8 +16,8 @@
         files: \.py$
         exclude: tests/unit/compile_test.py
 
--   repo: git://github.com/bukzor/pre-commit-system-hook.git
-    sha: v0.0
+-   repo: https://github.com/bukzor/pre-commit-system-hook.git
+    rev: v0.0
     hooks:
     -   id: system
         name: PyLint
